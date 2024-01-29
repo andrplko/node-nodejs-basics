@@ -1,11 +1,13 @@
+import { fileURLToPath } from 'node:url';
 import { createGunzip } from 'node:zlib';
 import { pipeline } from 'node:stream';
 import { createReadStream, createWriteStream, unlink } from 'node:fs';
-import { cwd, exitCode } from 'node:process';
-import { join } from 'path';
+import { exitCode } from 'node:process';
+import { join, dirname } from 'path';
 
 const decompress = async () => {
-  const directoryPath = join(cwd(), 'files');
+  const currentDirectoryPath = dirname(fileURLToPath(import.meta.url));
+  const directoryPath = join(currentDirectoryPath, 'files');
   const sourceFile = 'archive.gz';
   const destinationFile = 'fileToCompress.txt';
   const sourceFilePath = join(directoryPath, sourceFile);

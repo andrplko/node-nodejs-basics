@@ -1,9 +1,10 @@
+import { fileURLToPath } from 'node:url';
 import { promises } from 'fs';
-import { cwd } from 'node:process';
-import { join } from 'path';
+import { join, dirname } from 'path';
 
 const rename = async () => {
-  const directoryPath = join(cwd(), 'files');
+  const currentDirectoryPath = dirname(fileURLToPath(import.meta.url));
+  const directoryPath = join(currentDirectoryPath, 'files');
   const oldFileName = 'wrongFilename.txt';
   const newFilename = 'properFilename.md';
   const oldFilePath = join(directoryPath, oldFileName);

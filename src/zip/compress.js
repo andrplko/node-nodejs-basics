@@ -1,11 +1,13 @@
+import { fileURLToPath } from 'node:url';
 import { createGzip } from 'node:zlib';
 import { pipeline } from 'node:stream';
 import { createReadStream, createWriteStream, unlink } from 'node:fs';
-import { cwd, exitCode } from 'node:process';
-import { join } from 'path';
+import { exitCode } from 'node:process';
+import { join, dirname } from 'path';
 
 const compress = async () => {
-  const directoryPath = join(cwd(), 'files');
+  const currentDirectoryPath = dirname(fileURLToPath(import.meta.url));
+  const directoryPath = join(currentDirectoryPath, 'files');
   const sourceFile = 'fileToCompress.txt';
   const destinationFile = 'archive.gz';
   const sourceFilePath = join(directoryPath, sourceFile);

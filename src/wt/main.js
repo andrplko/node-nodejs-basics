@@ -1,11 +1,12 @@
 import { Worker, isMainThread } from 'worker_threads';
 import os from 'os';
-import { cwd } from 'process';
-import { join } from 'path';
+import { fileURLToPath } from 'node:url';
+import { join, dirname } from 'path';
 
 const performCalculations = async () => {
+  const directoryPath = dirname(fileURLToPath(import.meta.url));
   const fileName = 'worker.js';
-  const filePath = join(cwd(), fileName);
+  const filePath = join(directoryPath, fileName);
 
   const numCores = os.cpus().length;
   const results = [];

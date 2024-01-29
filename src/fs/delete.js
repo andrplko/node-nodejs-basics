@@ -1,11 +1,11 @@
+import { fileURLToPath } from 'node:url';
 import { rm } from 'fs/promises';
-import { cwd } from 'node:process';
-import { join } from 'path';
+import { join, dirname } from 'path';
 
 const remove = async () => {
-  const directoryPath = join(cwd(), 'files');
+  const directoryPath = dirname(fileURLToPath(import.meta.url));
   const fileName = 'fileToRemove.txt';
-  const filePath = join(directoryPath, fileName);
+  const filePath = join(directoryPath, 'files', fileName);
 
   try {
     await rm(filePath);

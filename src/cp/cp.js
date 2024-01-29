@@ -1,11 +1,12 @@
+import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
-import { stdin, stdout, cwd } from 'node:process';
-import { join } from 'path';
+import { stdin, stdout } from 'node:process';
+import { join, dirname } from 'path';
 
 const spawnChildProcess = async (args) => {
-  const directoryPath = join(cwd(), 'files');
+  const directoryPath = dirname(fileURLToPath(import.meta.url));
   const fileName = 'script.js';
-  const filePath = join(directoryPath, fileName);
+  const filePath = join(directoryPath, 'files', fileName);
 
   const childProcess = spawn('node', [filePath, ...args], {
     stdio: ['pipe', 'pipe', 'inherit'],

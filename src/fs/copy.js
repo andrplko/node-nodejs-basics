@@ -1,10 +1,12 @@
+import { fileURLToPath } from 'node:url';
 import { copyFile, mkdir, readdir } from 'fs/promises';
-import { cwd } from 'node:process';
-import { join } from 'path';
+import { join, dirname } from 'path';
 
 const copy = async () => {
-  const sourceFolderPath = join(cwd(), 'files');
-  const destinationFolderPath = join(cwd(), 'files_copy');
+  const filePath = fileURLToPath(import.meta.url);
+  const dirPath = dirname(filePath);
+  const sourceFolderPath = join(dirPath, 'files');
+  const destinationFolderPath = join(dirPath, 'files_copy');
 
   try {
     await readdir(sourceFolderPath);

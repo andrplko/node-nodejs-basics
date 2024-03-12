@@ -8,9 +8,8 @@ const {
 import { join, dirname } from 'path';
 
 const calculateHash = async () => {
-  const directoryPath = dirname(fileURLToPath(import.meta.url));
-  const fileName = 'fileToCalculateHashFor.txt';
-  const filePath = join(directoryPath, 'files', fileName);
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const filePath = join(__dirname, 'files', 'fileToCalculateHashFor.txt');
 
   const hash = createHash('sha256');
   const stream = createReadStream(filePath);
@@ -21,8 +20,10 @@ const calculateHash = async () => {
 
   stream.on('end', () => {
     const hashValue = hash.digest('hex');
-    console.log(hashValue)
+    console.log(hashValue);
   });
+
+  stream.on('error', (err) => console.error(err.message));
 };
 
 await calculateHash();

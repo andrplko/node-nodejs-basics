@@ -3,18 +3,13 @@ import { rm } from 'fs/promises';
 import { join, dirname } from 'path';
 
 const remove = async () => {
-  const directoryPath = dirname(fileURLToPath(import.meta.url));
-  const fileName = 'fileToRemove.txt';
-  const filePath = join(directoryPath, 'files', fileName);
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const pathToFile = join(__dirname, 'files', 'fileToRemove.txt');
 
   try {
-    await rm(filePath);
-  } catch (err) {
-    if (err.code === 'ENOENT') {
-      throw new Error('FS operation failed');
-    } else {
-      console.error(err);
-    }
+    await rm(pathToFile);
+  } catch {
+    throw new Error('FS operation failed');
   }
 };
 

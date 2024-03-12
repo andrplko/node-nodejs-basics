@@ -1,16 +1,17 @@
-import { Transform } from 'node:stream';
-import { stdin, stdout } from 'node:process';
+import { Transform } from 'stream';
+import { stdin, stdout } from 'process';
 
 const transform = async () => {
   const myTransform = new Transform({
     transform(chunk, _encoding, callback) {
       const reversed = chunk.toString().split('').reverse().join('');
-      callback(null, reversed);
+      callback(null, reversed + '\n');
     },
   });
 
-  stdin.pipe(myTransform);
-  myTransform.pipe(stdout);
+  stdout.write('Type something:\n');
+
+  stdin.pipe(myTransform).pipe(stdout);
 };
 
 await transform();

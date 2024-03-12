@@ -6,11 +6,10 @@ import { stdout } from 'node:process';
 import { join, dirname } from 'path';
 
 const read = async () => {
-  const directoryPath = dirname(fileURLToPath(import.meta.url));
-  const fileName = 'fileToRead.txt';
-  const filePath = join(directoryPath, 'files', fileName);
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const pathToFile = join(__dirname, 'files', 'fileToRead.txt');
 
-  const stream = createReadStream(filePath, { encoding: 'utf8' });
+  const stream = createReadStream(pathToFile, { encoding: 'utf-8' });
 
   stream.on('data', (data) => {
     stdout.write(`${data}\n`);

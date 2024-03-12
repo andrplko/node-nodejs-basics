@@ -1,32 +1,31 @@
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath } from 'url';
 import {
   createWriteStream,
-} from 'node:fs';
-import { stdin, stdout } from 'node:process';
-import { createInterface} from 'node:readline';
+} from 'fs';
+import { stdin as input, stdout as output } from 'process';
+import { createInterface} from 'readline';
 import { join, dirname } from 'path';
 
 const write = async () => {
-  const directoryPath = dirname(fileURLToPath(import.meta.url));
-  const fileName = 'fileToWrite.txt';
-  const filePath = join(directoryPath, 'files', fileName);
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const pathToFile = join(__dirname, 'files', 'fileToWrite.txt');
 
-  const stream = createWriteStream(filePath, { encoding: 'utf8' });
+  const stream = createWriteStream(pathToFile, { encoding: 'utf8' });
 
   const logOut = () => {
-    stdout.write('Bye! See you next time.\n');
+    output.write('Bye! See you next time.\n');
     lineReader.close();
   }
 
   const lineReader = createInterface({
-    input: stdin,
-    output: stdout,
+    input,
+    output,
   })
 
   lineReader.write('Hello! Please, write the text...\n');
 
   lineReader.on("line", (input) => {
-    if (input.toString().trim() === 'exit') {
+    if (input.trim() === 'exit') {
       logOut();
     } else {
       stream.write(input + '\n');

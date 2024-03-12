@@ -2,13 +2,10 @@ import { parentPort, workerData } from 'worker_threads';
 
 const nthFibonacci = (n) => n < 2 ? n : nthFibonacci(n - 1) + nthFibonacci(n - 2);
 
+if (Math.random() > 0.5) throw new Error('Thrown Error');
+
 const sendResult = () => {
-  try {
-    const result = nthFibonacci(workerData);
-    parentPort.postMessage({ status: 'resolved', data: result });
-  } catch (error) {
-    parentPort.postMessage({ status: 'error', data: null });
-  }
+  parentPort.postMessage(nthFibonacci(workerData));
 };
 
 sendResult();

@@ -1,33 +1,23 @@
 import { Worker, isMainThread } from 'worker_threads';
-import os from 'os';
-import { fileURLToPath } from 'node:url';
+import { availableParallelism } from 'os';
+import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
 
 const performCalculations = async () => {
-  const directoryPath = dirname(fileURLToPath(import.meta.url));
-  const fileName = 'worker.js';
-  const filePath = join(directoryPath, fileName);
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const pathToFile = join(__dirname, 'worker.js');
 
-  const numCores = os.cpus().length;
-  const results = [];
+  const numCores = availableParallelism();
 
   const createWorker = (index) => {
-    return new Promise((resolve, reject) => {
-      const worker = new Worker(filePath, { workerData: index + 10 });
+    return new Promise((resolve) => {
+      const worker = new Worker(pathToFile, { workerData: index + 10 });
 
-      worker.on('message', (result) => {
-        results[index] = result;
-        resolve();
+      worker.on('message', (data) => {
+        resolve({ status: 'resolved', data });
       });
-
-      worker.on('error', (error) => {
-        results[index] = { status: 'error', data: null };
-        reject(error);
-      });
-
-      worker.on('exit', (code) => {
-        if (code !== 0)
-          reject(new Error(`Worker stopped with exit code ${code}`));
+      worker.on('error', () => {
+        resolve({ status: 'error', data: null })
       });
     });
   };
@@ -37,12 +27,9 @@ const performCalculations = async () => {
       .fill(null)
       .map((_, index) => createWorker(index));
 
-    try {
-      await Promise.all(workerPromises);
+      const results = await Promise.all(workerPromises);
+
       console.log('Results:', results);
-    } catch (error) {
-      console.error('Error occurred in one of the workers:', error);
-    }
   }
 };
 

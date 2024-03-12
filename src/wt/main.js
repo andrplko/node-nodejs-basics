@@ -23,13 +23,13 @@ const performCalculations = async () => {
   };
 
   if (isMainThread) {
-    const workerPromises = Array(numCores)
+    const workers = Array(numCores)
       .fill(null)
       .map((_, index) => createWorker(index));
 
-      const results = await Promise.all(workerPromises);
+      const workerPromises = await Promise.all(workers);
 
-      console.log('Results:', results);
+      console.log('Results:', workerPromises);
   }
 };
 

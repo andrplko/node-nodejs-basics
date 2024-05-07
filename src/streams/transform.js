@@ -4,8 +4,8 @@ import { stdin, stdout } from 'process';
 const transform = async () => {
   const myTransform = new Transform({
     transform(chunk, _encoding, callback) {
-      const reversed = chunk.toString().split('').reverse().join('');
-      callback(null, reversed + '\n');
+      const reversedText = chunk.toString().split('').reverse().join('');
+      callback(null, reversedText + '\n');
     },
   });
 

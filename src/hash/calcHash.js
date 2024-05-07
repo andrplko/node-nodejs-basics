@@ -1,10 +1,10 @@
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath } from 'url';
 import {
   createReadStream,
-} from 'node:fs';
+} from 'fs';
 const {
   createHash,
-} = await import('node:crypto');
+} = await import('crypto');
 import { join, dirname } from 'path';
 
 const calculateHash = async () => {

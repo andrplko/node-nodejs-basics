@@ -1,8 +1,8 @@
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath } from 'url';
 import {
   createReadStream,
-} from 'node:fs';
-import { stdout } from 'node:process';
+} from 'fs';
+import { stdout } from 'process';
 import { join, dirname } from 'path';
 
 const read = async () => {

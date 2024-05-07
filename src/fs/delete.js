@@ -1,4 +1,4 @@
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath } from 'url';
 import { rm } from 'fs/promises';
 import { join, dirname } from 'path';
 

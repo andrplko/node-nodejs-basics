@@ -1,4 +1,4 @@
-import { stdin, stdout, argv, exit } from 'node:process';
+import { stdin, stdout, argv, exit } from 'process';
 
 const args = argv.slice(2);
 

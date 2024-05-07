@@ -1,8 +1,7 @@
 import { fileURLToPath } from 'url';
 import { createGzip } from 'zlib';
 import { pipeline } from 'stream/promises';
-import { createReadStream, createWriteStream, unlink } from 'fs';
-import { exitCode } from 'process';
+import { createReadStream, createWriteStream } from 'fs';
 import { join, dirname } from 'path';
 
 const compress = async () => {
